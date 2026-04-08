@@ -1,0 +1,10 @@
+CREATE DATABASE IF NOT EXISTS forrest CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+USE forrest;
+
+CREATE TABLE IF NOT EXISTS runs (
+    id       INT AUTO_INCREMENT PRIMARY KEY,
+    run_date DATE NOT NULL UNIQUE,
+    miles    DECIMAL(5,2) NOT NULL,
+    notes    VARCHAR(255) DEFAULT NULL
+);
