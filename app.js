@@ -62,6 +62,10 @@ function renderCalendar() {
                         'July','August','September','October','November','December'];
     document.getElementById('month-label').textContent = `${monthNames[month - 1]} ${year}`;
 
+    const total = Object.values(state.runs).reduce((sum, r) => sum + parseFloat(r.miles), 0);
+    const totalEl = document.getElementById('month-total');
+    totalEl.textContent = total > 0 ? `— ${total % 1 === 0 ? total : total.toFixed(2)} mi` : '';
+
     const grid      = document.getElementById('calendar-grid');
     const firstDay  = new Date(year, month - 1, 1).getDay();   // 0=Sun
     const daysInMo  = new Date(year, month, 0).getDate();
