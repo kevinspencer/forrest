@@ -47,10 +47,17 @@ header h1 {
     background: rgba(255,255,255,0.15);
 }
 
-#month-label {
-    font-size: 1.1rem;
+#month-display {
     min-width: 160px;
     text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+}
+
+#month-label {
+    font-size: 1.1rem;
 }
 
 #month-total {
