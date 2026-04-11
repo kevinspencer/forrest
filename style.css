@@ -53,6 +53,11 @@ header h1 {
     text-align: center;
 }
 
+#month-total {
+    font-size: 0.95rem;
+    opacity: 0.8;
+}
+
 /* Calendar */
 
 main {
