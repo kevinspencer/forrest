@@ -74,6 +74,20 @@ function renderCalendar() {
 
     grid.innerHTML = '';
 
+    let pos       = firstDay;   // current column (0–6)
+    let weekMiles = 0;
+
+    function appendWeekTotal() {
+        const cell = document.createElement('div');
+        cell.className = 'week-total';
+        cell.textContent = weekMiles > 0
+            ? (weekMiles % 1 === 0 ? weekMiles : weekMiles.toFixed(2)) + ' mi'
+            : '—';
+        grid.appendChild(cell);
+        weekMiles = 0;
+        pos = 0;
+    }
+
     // Empty cells before the 1st
     for (let i = 0; i < firstDay; i++) {
         const empty = document.createElement('div');
@@ -95,6 +109,7 @@ function renderCalendar() {
 
         if (run) {
             cell.classList.add(milesTier(parseFloat(run.miles)));
+            weekMiles += parseFloat(run.miles);
         }
 
         const numEl = document.createElement('div');
@@ -118,6 +133,19 @@ function renderCalendar() {
 
         cell.addEventListener('click', () => openModal(dateStr, run));
         grid.appendChild(cell);
+
+        pos++;
+        if (pos === 7) appendWeekTotal();
+    }
+
+    // Finish the last (partial) row
+    if (pos > 0) {
+        for (let i = pos; i < 7; i++) {
+            const empty = document.createElement('div');
+            empty.className = 'day empty';
+            grid.appendChild(empty);
+        }
+        appendWeekTotal();
     }
 }
 
