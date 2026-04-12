@@ -42,12 +42,34 @@ function nextMonth() {
 // --- Data loading ---
 
 async function loadMonth() {
-    const res  = await fetch(`${API}?year=${state.year}&month=${state.month}`);
+    const { year, month } = state;
+
+    const res  = await fetch(`${API}?year=${year}&month=${month}`);
     const rows = await res.json();
 
     state.runs = {};
     for (const row of rows) {
         state.runs[row.run_date] = row;
+    }
+
+    // Fetch prev month if the 1st doesn't fall on Sunday
+    const firstDay = new Date(year, month - 1, 1).getDay();
+    if (firstDay > 0) {
+        let pm = month - 1, py = year;
+        if (pm < 1) { pm = 12; py--; }
+        const pr   = await fetch(`${API}?year=${py}&month=${pm}`);
+        const prows = await pr.json();
+        for (const row of prows) state.runs[row.run_date] = row;
+    }
+
+    // Fetch next month if the last row is incomplete
+    const daysInMo = new Date(year, month, 0).getDate();
+    if ((firstDay + daysInMo) % 7 !== 0) {
+        let nm = month + 1, ny = year;
+        if (nm > 12) { nm = 1; ny++; }
+        const nr   = await fetch(`${API}?year=${ny}&month=${nm}`);
+        const nrows = await nr.json();
+        for (const row of nrows) state.runs[row.run_date] = row;
     }
 
     renderCalendar();
@@ -62,7 +84,10 @@ function renderCalendar() {
                         'July','August','September','October','November','December'];
     document.getElementById('month-label').textContent = `${monthNames[month - 1]} ${year}`;
 
-    const total = Object.values(state.runs).reduce((sum, r) => sum + parseFloat(r.miles), 0);
+    const monthPrefix = `${year}-${String(month).padStart(2,'0')}-`;
+    const total = Object.values(state.runs)
+        .filter(r => r.run_date.startsWith(monthPrefix))
+        .reduce((sum, r) => sum + parseFloat(r.miles), 0);
     const totalEl = document.getElementById('month-total');
     totalEl.textContent = total > 0 ? `— ${total % 1 === 0 ? total : total.toFixed(2)} mi` : '';
 
@@ -88,22 +113,13 @@ function renderCalendar() {
         pos = 0;
     }
 
-    // Empty cells before the 1st
-    for (let i = 0; i < firstDay; i++) {
-        const empty = document.createElement('div');
-        empty.className = 'day empty';
-        grid.appendChild(empty);
-    }
-
-    for (let d = 1; d <= daysInMo; d++) {
-        const dateStr = `${year}-${String(month).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
-        const run     = state.runs[dateStr] || null;
-
+    function buildDayCell(dateStr, d, otherMonth) {
+        const run  = state.runs[dateStr] || null;
         const cell = document.createElement('div');
-        cell.className = 'day';
+        cell.className = 'day' + (otherMonth ? ' other-month' : '');
         cell.dataset.date = dateStr;
 
-        if (isThisMonth && d === today.getDate()) {
+        if (!otherMonth && isThisMonth && d === today.getDate()) {
             cell.classList.add('today');
         }
 
@@ -132,18 +148,38 @@ function renderCalendar() {
         }
 
         cell.addEventListener('click', () => openModal(dateStr, run));
-        grid.appendChild(cell);
+        return cell;
+    }
+
+    // Prev month overflow cells
+    let pm = month - 1, py = year;
+    if (pm < 1) { pm = 12; py--; }
+    const daysInPrevMonth = new Date(py, pm, 0).getDate();
+
+    for (let i = 0; i < firstDay; i++) {
+        const d       = daysInPrevMonth - firstDay + 1 + i;
+        const dateStr = `${py}-${String(pm).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+        grid.appendChild(buildDayCell(dateStr, d, true));
+    }
+
+    // Current month cells
+    for (let d = 1; d <= daysInMo; d++) {
+        const dateStr = `${year}-${String(month).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+        grid.appendChild(buildDayCell(dateStr, d, false));
 
         pos++;
         if (pos === 7) appendWeekTotal();
     }
 
-    // Finish the last (partial) row
+    // Next month overflow cells
     if (pos > 0) {
+        let nm = month + 1, ny = year;
+        if (nm > 12) { nm = 1; ny++; }
+
         for (let i = pos; i < 7; i++) {
-            const empty = document.createElement('div');
-            empty.className = 'day empty';
-            grid.appendChild(empty);
+            const d       = i - pos + 1;
+            const dateStr = `${ny}-${String(nm).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+            grid.appendChild(buildDayCell(dateStr, d, true));
         }
         appendWeekTotal();
     }
