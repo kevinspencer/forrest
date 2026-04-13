@@ -26,18 +26,25 @@ header h1 {
     letter-spacing: 0.05em;
 }
 
+.auth-wrap {
+    margin-left: auto;
+    display: flex;
+}
+
+/* Month nav (below calendar) */
+
 .month-nav {
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 1rem;
-    margin-left: auto;
-    margin-right: 1rem;
+    padding: 1rem 0;
 }
 
 .month-nav button {
     background: none;
-    border: 1px solid rgba(255,255,255,0.5);
-    color: #fff;
+    border: 1px solid #2d6a2d;
+    color: #2d6a2d;
     padding: 0.25rem 0.75rem;
     border-radius: 4px;
     cursor: pointer;
@@ -45,7 +52,7 @@ header h1 {
 }
 
 .month-nav button:hover {
-    background: rgba(255,255,255,0.15);
+    background: #e8f0e8;
 }
 
 #month-display {
@@ -59,10 +66,7 @@ header h1 {
 
 #month-label {
     font-size: 1.1rem;
-}
-
-.auth-wrap {
-    display: flex;
+    color: #1a2e1a;
 }
 
 .auth-btn {
