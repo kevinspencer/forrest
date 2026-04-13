@@ -3,7 +3,8 @@ const API = 'api/runs.php';
 const state = {
     year: null,
     month: null,
-    runs: {},   // keyed by 'YYYY-MM-DD'
+    runs: {},       // keyed by 'YYYY-MM-DD'
+    authenticated: false,
 };
 
 // --- Init ---
@@ -21,6 +22,25 @@ function init() {
     document.getElementById('modal-overlay').addEventListener('click', function (e) {
         if (e.target === this) closeModal();
     });
+
+    loadSession();
+}
+
+// --- Session ---
+
+async function loadSession() {
+    const res  = await fetch('api/session.php');
+    const data = await res.json();
+    state.authenticated = data.authenticated;
+
+    const authBtn = document.getElementById('auth-btn');
+    if (state.authenticated) {
+        authBtn.textContent = 'Sign out';
+        authBtn.href = 'logout.php';
+    } else {
+        authBtn.textContent = 'Sign in';
+        authBtn.href = 'login.php';
+    }
 
     loadMonth();
 }
@@ -195,6 +215,7 @@ function milesTier(miles) {
 // --- Modal ---
 
 function openModal(dateStr, run) {
+    if (!state.authenticated) return;
     const label = new Date(dateStr + 'T00:00:00').toLocaleDateString('en-US', {
         weekday: 'long', month: 'long', day: 'numeric'
     });

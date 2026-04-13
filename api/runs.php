@@ -1,10 +1,19 @@
 <?php
 
+session_start();
 require_once __DIR__ . '/db.php';
 
 header('Content-Type: application/json');
 
 $method = $_SERVER['REQUEST_METHOD'];
+
+function require_auth(): void {
+    if (empty($_SESSION['authenticated'])) {
+        http_response_code(401);
+        echo json_encode(['error' => 'Unauthorized']);
+        exit;
+    }
+}
 
 function json_error(int $status, string $message): void {
     http_response_code($status);
@@ -30,6 +39,7 @@ if ($method === 'GET') {
     echo json_encode($stmt->fetchAll(PDO::FETCH_ASSOC));
 
 } elseif ($method === 'POST') {
+    require_auth();
     $body = json_decode(file_get_contents('php://input'), true);
 
     $run_date = $body['run_date'] ?? null;
@@ -59,6 +69,7 @@ if ($method === 'GET') {
     echo json_encode(['ok' => true]);
 
 } elseif ($method === 'DELETE') {
+    require_auth();
     $run_date = $_GET['run_date'] ?? null;
 
     if (!$run_date) {
