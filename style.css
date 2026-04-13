@@ -287,3 +287,43 @@ main {
 .hidden {
     display: none !important;
 }
+
+/* Mobile */
+
+@media (max-width: 600px) {
+    main {
+        padding: 0.75rem;
+    }
+
+    .calendar-header,
+    .calendar-grid {
+        grid-template-columns: repeat(8, 1fr);
+    }
+
+    .day,
+    .week-total {
+        min-height: 56px;
+        padding: 0.25rem;
+    }
+
+    .day-number {
+        font-size: 0.7rem;
+    }
+
+    .day-miles {
+        font-size: 0.75rem;
+    }
+
+    .day-notes {
+        display: none;
+    }
+
+    .week-total {
+        font-size: 0.7rem;
+    }
+
+    .calendar-header span {
+        font-size: 0.65rem;
+        letter-spacing: 0;
+    }
+}
