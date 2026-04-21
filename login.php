@@ -4,7 +4,7 @@ session_start();
 require_once __DIR__ . '/config.php';
 
 if (!empty($_SESSION['authenticated'])) {
-    header('Location: index.php');
+    header('Location: /forrest/');
     exit;
 }
 
@@ -15,7 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (password_verify($password, PASSWORD_HASH)) {
         session_regenerate_id(true);
         $_SESSION['authenticated'] = true;
-        header('Location: index.php');
+        header('Location: /forrest/');
         exit;
     }
     $error = 'Invalid password.';
