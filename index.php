@@ -10,6 +10,10 @@
 
     <header>
         <h1>Forrest</h1>
+        <nav class="header-nav">
+            <a href="index.php" class="active">Calendar</a>
+            <a href="stats.php">Stats</a>
+        </nav>
         <div class="auth-wrap">
             <a id="auth-btn" href="login.php" class="auth-btn"></a>
         </div>
