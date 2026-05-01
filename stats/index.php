@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Forrest &mdash; Stats</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="/forrest/style.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 </head>
 <body>
@@ -12,11 +12,11 @@
     <header>
         <h1>Forrest</h1>
         <nav class="header-nav">
-            <a href="index.php">Calendar</a>
-            <a href="stats.php" class="active">Stats</a>
+            <a href="/forrest/">Calendar</a>
+            <a href="/forrest/stats/" class="active">Stats</a>
         </nav>
         <div class="auth-wrap">
-            <a id="auth-btn" href="login.php" class="auth-btn"></a>
+            <a id="auth-btn" href="/forrest/login.php" class="auth-btn"></a>
         </div>
     </header>
 
@@ -122,20 +122,20 @@
     }
 
     async function loadSession() {
-        const res  = await fetch('api/session.php');
+        const res  = await fetch('/forrest/api/session.php');
         const data = await res.json();
         const btn  = document.getElementById('auth-btn');
         if (data.authenticated) {
             btn.textContent = 'Sign out';
-            btn.href = 'logout.php';
+            btn.href = '/forrest/logout.php';
         } else {
             btn.textContent = 'Sign in';
-            btn.href = 'login.php';
+            btn.href = '/forrest/login.php';
         }
     }
 
     async function loadStats() {
-        const res  = await fetch('api/stats.php');
+        const res  = await fetch('/forrest/api/stats.php');
         const s    = await res.json();
 
         set('s-all-time',      fmt(s.total_all_time) + ' mi');
