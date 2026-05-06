@@ -108,6 +108,21 @@
     <script>
     const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 
+    const dark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const clr = dark ? {
+        grid:         '#2a3d2a', tick:         '#7ab87a',
+        monthCur:     '#5ab870', monthCurBdr:  '#4aa060',
+        monthOther:   '#3d8a52', monthOtherBdr:'#2d7a42',
+        weekCur:      '#4a8ec7', weekCurBdr:   '#3a7eb7',
+        weekOther:    '#3a6ea0', weekOtherBdr: '#2a5e90',
+    } : {
+        grid:         '#e0e8e0', tick:         '#4a6e4a',
+        monthCur:     '#1e6b32', monthCurBdr:  '#145228',
+        monthOther:   '#4d9e60', monthOtherBdr:'#3a8a4d',
+        weekCur:      '#1a5f9e', weekCurBdr:   '#154d82',
+        weekOther:    '#5b8fc7', weekOtherBdr: '#4a7ab2',
+    };
+
     function fmt(n) {
         return Number(n).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     }
@@ -168,10 +183,10 @@
         document.getElementById('monthly-chart-title').textContent = `Monthly Miles — ${year}`;
 
         const colors = data.map((_, i) =>
-            i === curMonth ? '#1e6b32' : '#4d9e60'
+            i === curMonth ? clr.monthCur : clr.monthOther
         );
         const borderColors = data.map((_, i) =>
-            i === curMonth ? '#145228' : '#3a8a4d'
+            i === curMonth ? clr.monthCurBdr : clr.monthOtherBdr
         );
 
         new Chart(document.getElementById('monthlyChart'), {
@@ -202,7 +217,7 @@
         const labels = weeks.map(w => w.label);
         const data   = weeks.map(w => w.miles);
         const colors = weeks.map((w, i) =>
-            i === weeks.length - 1 ? '#1a5f9e' : '#5b8fc7'
+            i === weeks.length - 1 ? clr.weekCur : clr.weekOther
         );
 
         new Chart(document.getElementById('weeklyChart'), {
@@ -213,7 +228,7 @@
                     label: 'Miles',
                     data,
                     backgroundColor: colors,
-                    borderColor: colors.map(c => c === '#1a5f9e' ? '#154d82' : '#4a7ab2'),
+                    borderColor: colors.map(c => c === clr.weekCur ? clr.weekCurBdr : clr.weekOtherBdr),
                     borderWidth: 1,
                     borderRadius: 4,
                 }]
@@ -237,13 +252,13 @@
             scales: {
                 x: {
                     grid: { display: false },
-                    ticks: { color: '#4a6e4a', font: { size: 11 } },
+                    ticks: { color: clr.tick, font: { size: 11 } },
                 },
                 y: {
                     beginAtZero: true,
-                    grid: { color: '#e0e8e0' },
+                    grid: { color: clr.grid },
                     ticks: {
-                        color: '#4a6e4a',
+                        color: clr.tick,
                         font: { size: 11 },
                         callback: v => v + ' mi',
                     }
