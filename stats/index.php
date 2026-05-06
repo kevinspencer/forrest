@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Forrest &mdash; Stats</title>
     <link rel="stylesheet" href="/forrest/style.css">
+    <script src="/forrest/theme.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 </head>
 <body>
@@ -16,6 +17,7 @@
             <a href="/forrest/stats/" class="active">Stats</a>
         </nav>
         <div class="auth-wrap">
+            <button id="theme-toggle" class="theme-toggle" onclick="toggleTheme()"></button>
             <a id="auth-btn" href="/forrest/login.php" class="auth-btn"></a>
         </div>
     </header>
@@ -108,20 +110,24 @@
     <script>
     const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 
-    const dark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    const clr = dark ? {
-        grid:         '#2a3d2a', tick:         '#7ab87a',
-        monthCur:     '#5ab870', monthCurBdr:  '#4aa060',
-        monthOther:   '#3d8a52', monthOtherBdr:'#2d7a42',
-        weekCur:      '#4a8ec7', weekCurBdr:   '#3a7eb7',
-        weekOther:    '#3a6ea0', weekOtherBdr: '#2a5e90',
-    } : {
-        grid:         '#e0e8e0', tick:         '#4a6e4a',
-        monthCur:     '#1e6b32', monthCurBdr:  '#145228',
-        monthOther:   '#4d9e60', monthOtherBdr:'#3a8a4d',
-        weekCur:      '#1a5f9e', weekCurBdr:   '#154d82',
-        weekOther:    '#5b8fc7', weekOtherBdr: '#4a7ab2',
-    };
+    function getClr() {
+        return isDarkActive() ? {
+            grid:         '#2a3d2a', tick:         '#7ab87a',
+            monthCur:     '#5ab870', monthCurBdr:  '#4aa060',
+            monthOther:   '#3d8a52', monthOtherBdr:'#2d7a42',
+            weekCur:      '#4a8ec7', weekCurBdr:   '#3a7eb7',
+            weekOther:    '#3a6ea0', weekOtherBdr: '#2a5e90',
+        } : {
+            grid:         '#e0e8e0', tick:         '#4a6e4a',
+            monthCur:     '#1e6b32', monthCurBdr:  '#145228',
+            monthOther:   '#4d9e60', monthOtherBdr:'#3a8a4d',
+            weekCur:      '#1a5f9e', weekCurBdr:   '#154d82',
+            weekOther:    '#5b8fc7', weekOtherBdr: '#4a7ab2',
+        };
+    }
+
+    let monthlyChart = null, weeklyChart = null;
+    let lastMonthlyData = null, lastWeeklyData = null;
 
     function fmt(n) {
         return Number(n).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
@@ -176,9 +182,13 @@
     }
 
     function buildMonthlyChart(data) {
+        if (monthlyChart) monthlyChart.destroy();
+        lastMonthlyData = data;
+
         const now       = new Date();
         const curMonth  = now.getMonth(); // 0-indexed
         const year      = now.getFullYear();
+        const clr       = getClr();
 
         document.getElementById('monthly-chart-title').textContent = `Monthly Miles — ${year}`;
 
@@ -189,7 +199,7 @@
             i === curMonth ? clr.monthCurBdr : clr.monthOtherBdr
         );
 
-        new Chart(document.getElementById('monthlyChart'), {
+        monthlyChart = new Chart(document.getElementById('monthlyChart'), {
             type: 'bar',
             data: {
                 labels: MONTHS,
@@ -207,20 +217,17 @@
     }
 
     function buildWeeklyChart(weeks) {
-        const now     = new Date();
-        // ISO week: monday of current week
-        const day     = now.getDay() || 7;
-        const monday  = new Date(now);
-        monday.setDate(now.getDate() - day + 1);
-        monday.setHours(0,0,0,0);
+        if (weeklyChart) weeklyChart.destroy();
+        lastWeeklyData = weeks;
 
+        const clr    = getClr();
         const labels = weeks.map(w => w.label);
         const data   = weeks.map(w => w.miles);
         const colors = weeks.map((w, i) =>
             i === weeks.length - 1 ? clr.weekCur : clr.weekOther
         );
 
-        new Chart(document.getElementById('weeklyChart'), {
+        weeklyChart = new Chart(document.getElementById('weeklyChart'), {
             type: 'bar',
             data: {
                 labels,
@@ -237,7 +244,8 @@
         });
     }
 
-    function chartOptions(yLabel) {
+    function chartOptions() {
+        const clr = getClr();
         return {
             responsive: true,
             maintainAspectRatio: true,
@@ -267,6 +275,12 @@
         };
     }
 
+    document.addEventListener('themechange', function () {
+        if (lastMonthlyData) buildMonthlyChart(lastMonthlyData);
+        if (lastWeeklyData) buildWeeklyChart(lastWeeklyData);
+    });
+
+    updateToggleBtn();
     loadSession();
     loadStats();
     </script>

@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Forrest</title>
     <link rel="stylesheet" href="style.css">
+    <script src="theme.js"></script>
 </head>
 <body>
 
@@ -15,6 +16,7 @@
             <a href="/forrest/stats/">Stats</a>
         </nav>
         <div class="auth-wrap">
+            <button id="theme-toggle" class="theme-toggle" onclick="toggleTheme()"></button>
             <a id="auth-btn" href="login.php" class="auth-btn"></a>
         </div>
     </header>
