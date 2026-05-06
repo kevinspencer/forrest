@@ -660,6 +660,8 @@ header .header-nav a.active {
 }
 
 @media (max-width: 600px) {
+    .theme-toggle { display: none; }
+
     main {
         padding: 0.75rem;
     }
