@@ -1,3 +1,79 @@
+:root {
+    --bg:                #f4f7f4;
+    --text:              #1a2e1a;
+    --text-dim:          #444;
+    --text-muted:        #555;
+
+    --header-bg:         #2d6a2d;
+
+    --surface:           #fff;
+    --surface-alt:       #fafafa;
+    --surface-tinted:    #f0f5f0;
+    --surface-header:    #e8f0e8;
+
+    --border:            #e0e8e0;
+    --border-medium:     #cdd9cd;
+
+    --accent:            #2d6a2d;
+    --accent-dark:       #245424;
+    --nav-color:         #4a6e4a;
+    --nav-color-alt:     #6b8f6b;
+
+    --month-nav-hover:   #e8f0e8;
+    --cancel-btn-bg:     #e8f0e8;
+    --cancel-btn-hover:  #d4e4d4;
+
+    --stat-sub:          #888;
+
+    --tier-1-bg:         #d4edda;
+    --tier-2-bg:         #92c99e;
+    --tier-3-bg:         #4d9e60;
+    --tier-4-bg:         #1e6b32;
+
+    --chart-grid:        #e0e8e0;
+    --chart-tick:        #4a6e4a;
+
+    color-scheme: light dark;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg:                #111a11;
+        --text:              #d4e8d4;
+        --text-dim:          #a0bca0;
+        --text-muted:        #7a967a;
+
+        --header-bg:         #1a3d1a;
+
+        --surface:           #192619;
+        --surface-alt:       #131a13;
+        --surface-tinted:    #1c2c1c;
+        --surface-header:    #1c2c1c;
+
+        --border:            #2a3d2a;
+        --border-medium:     #2d402d;
+
+        --accent:            #5a9e5a;
+        --accent-dark:       #4a8a4a;
+        --nav-color:         #7ab87a;
+        --nav-color-alt:     #7ab87a;
+
+        --month-nav-hover:   #1c2c1c;
+        --cancel-btn-bg:     #1c2c1c;
+        --cancel-btn-hover:  #223022;
+
+        --stat-sub:          #6a886a;
+
+        --tier-1-bg:         #1a3a22;
+        --tier-2-bg:         #1e5030;
+        --tier-3-bg:         #2d7a42;
+        --tier-4-bg:         #1a5a30;
+
+        --chart-grid:        #2a3d2a;
+        --chart-tick:        #7ab87a;
+    }
+}
+
 *, *::before, *::after {
     box-sizing: border-box;
     margin: 0;
@@ -6,15 +82,15 @@
 
 body {
     font-family: system-ui, sans-serif;
-    background: #f4f7f4;
-    color: #1a2e1a;
+    background: var(--bg);
+    color: var(--text);
     min-height: 100vh;
 }
 
 /* Header */
 
 header {
-    background: #2d6a2d;
+    background: var(--header-bg);
     color: #fff;
     padding: 1rem 2rem;
     display: flex;
@@ -31,7 +107,7 @@ header h1 {
     display: flex;
 }
 
-/* Month nav (below calendar) */
+/* Month nav */
 
 .month-nav {
     display: flex;
@@ -43,8 +119,8 @@ header h1 {
 
 .month-nav button {
     background: none;
-    border: 1px solid #2d6a2d;
-    color: #2d6a2d;
+    border: 1px solid var(--accent);
+    color: var(--accent);
     padding: 0.25rem 0.75rem;
     border-radius: 4px;
     cursor: pointer;
@@ -52,7 +128,7 @@ header h1 {
 }
 
 .month-nav button:hover {
-    background: #e8f0e8;
+    background: var(--month-nav-hover);
 }
 
 #month-display {
@@ -66,7 +142,7 @@ header h1 {
 
 #month-label {
     font-size: 1.1rem;
-    color: #1a2e1a;
+    color: var(--text);
 }
 
 .auth-btn {
@@ -97,7 +173,7 @@ main {
 }
 
 .calendar {
-    background: #fff;
+    background: var(--surface);
     border-radius: 8px;
     box-shadow: 0 1px 4px rgba(0,0,0,0.1);
     overflow: hidden;
@@ -106,8 +182,8 @@ main {
 .calendar-header {
     display: grid;
     grid-template-columns: repeat(7, 1fr) 80px;
-    background: #e8f0e8;
-    border-bottom: 1px solid #cdd9cd;
+    background: var(--surface-header);
+    border-bottom: 1px solid var(--border-medium);
 }
 
 .calendar-header span {
@@ -115,7 +191,7 @@ main {
     padding: 0.5rem 0;
     font-size: 0.8rem;
     font-weight: 600;
-    color: #4a6e4a;
+    color: var(--nav-color);
     text-transform: uppercase;
     letter-spacing: 0.05em;
 }
@@ -126,12 +202,12 @@ main {
 }
 
 .day {
-    border: 1px solid #e0e8e0;
+    border: 1px solid var(--border);
     min-height: 80px;
     padding: 0.4rem 0.5rem;
     cursor: pointer;
     transition: filter 0.1s;
-    background: #fff;
+    background: var(--surface);
 }
 
 .day:hover {
@@ -139,7 +215,7 @@ main {
 }
 
 .day.empty {
-    background: #fafafa;
+    background: var(--surface-alt);
     cursor: default;
     pointer-events: none;
 }
@@ -149,21 +225,21 @@ main {
 }
 
 .week-total {
-    border: 1px solid #e0e8e0;
+    border: 1px solid var(--border);
     min-height: 80px;
     padding: 0.4rem 0.5rem;
-    background: #f0f5f0;
+    background: var(--surface-tinted);
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     font-size: 0.85rem;
     font-weight: 600;
-    color: #4a6e4a;
+    color: var(--nav-color);
 }
 
 .day.today .day-number {
-    background: #2d6a2d;
+    background: var(--accent);
     color: #fff;
     border-radius: 50%;
     width: 1.5rem;
@@ -176,19 +252,19 @@ main {
 .day-number {
     font-size: 0.85rem;
     font-weight: 600;
-    color: #444;
+    color: var(--text-dim);
     margin-bottom: 0.25rem;
 }
 
 .day-miles {
     font-size: 0.95rem;
     font-weight: 700;
-    color: #1a2e1a;
+    color: var(--text);
 }
 
 .day-notes {
     font-size: 0.7rem;
-    color: #555;
+    color: var(--text-muted);
     margin-top: 0.15rem;
     white-space: nowrap;
     overflow: hidden;
@@ -197,10 +273,10 @@ main {
 
 /* Mileage color tiers */
 
-.tier-1 { background: #d4edda; }
-.tier-2 { background: #92c99e; }
-.tier-3 { background: #4d9e60; color: #fff; }
-.tier-4 { background: #1e6b32; color: #fff; }
+.tier-1 { background: var(--tier-1-bg); }
+.tier-2 { background: var(--tier-2-bg); }
+.tier-3 { background: var(--tier-3-bg); color: #fff; }
+.tier-4 { background: var(--tier-4-bg); color: #fff; }
 
 .tier-3 .day-number,
 .tier-3 .day-notes,
@@ -226,25 +302,25 @@ main {
 }
 
 .modal {
-    background: #fff;
+    background: var(--surface);
     border-radius: 8px;
     padding: 1.5rem;
     width: 100%;
     max-width: 360px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
 }
 
 .modal h2 {
     margin-bottom: 1rem;
     font-size: 1rem;
-    color: #2d6a2d;
+    color: var(--accent);
 }
 
 .modal label {
     display: block;
     font-size: 0.8rem;
     font-weight: 600;
-    color: #4a6e4a;
+    color: var(--nav-color);
     margin-bottom: 0.25rem;
     margin-top: 0.75rem;
 }
@@ -253,16 +329,18 @@ main {
 .modal textarea {
     width: 100%;
     padding: 0.5rem;
-    border: 1px solid #cdd9cd;
+    border: 1px solid var(--border-medium);
     border-radius: 4px;
     font-size: 1rem;
     font-family: inherit;
+    background: var(--surface-alt);
+    color: var(--text);
 }
 
 .modal input[type="number"]:focus,
 .modal textarea:focus {
     outline: none;
-    border-color: #2d6a2d;
+    border-color: var(--accent);
 }
 
 .modal-actions {
@@ -280,12 +358,12 @@ main {
 }
 
 .modal-actions button[type="submit"] {
-    background: #2d6a2d;
+    background: var(--accent);
     color: #fff;
 }
 
 .modal-actions button[type="submit"]:hover {
-    background: #245424;
+    background: var(--accent-dark);
 }
 
 #delete-btn {
@@ -298,13 +376,13 @@ main {
 }
 
 #cancel-btn {
-    background: #e8f0e8;
-    color: #1a2e1a;
+    background: var(--cancel-btn-bg);
+    color: var(--text);
     margin-left: auto;
 }
 
 #cancel-btn:hover {
-    background: #d4e4d4;
+    background: var(--cancel-btn-hover);
 }
 
 .hidden {
@@ -320,7 +398,7 @@ main {
 }
 
 .login-form {
-    background: #fff;
+    background: var(--surface);
     border-radius: 8px;
     box-shadow: 0 1px 4px rgba(0,0,0,0.1);
     padding: 2rem;
@@ -333,32 +411,34 @@ main {
 
 .login-form h2 {
     margin-bottom: 0.5rem;
-    color: #2d6a2d;
+    color: var(--accent);
 }
 
 .login-form label {
     font-size: 0.8rem;
     font-weight: 600;
-    color: #4a6e4a;
+    color: var(--nav-color);
     margin-top: 0.25rem;
 }
 
 .login-form input[type="password"] {
     padding: 0.5rem;
-    border: 1px solid #cdd9cd;
+    border: 1px solid var(--border-medium);
     border-radius: 4px;
     font-size: 1rem;
+    background: var(--surface-alt);
+    color: var(--text);
 }
 
 .login-form input[type="password"]:focus {
     outline: none;
-    border-color: #2d6a2d;
+    border-color: var(--accent);
 }
 
 .login-form button {
     margin-top: 0.75rem;
     padding: 0.6rem;
-    background: #2d6a2d;
+    background: var(--accent);
     color: #fff;
     border: none;
     border-radius: 4px;
@@ -367,7 +447,7 @@ main {
 }
 
 .login-form button:hover {
-    background: #245424;
+    background: var(--accent-dark);
 }
 
 .login-error {
@@ -414,7 +494,7 @@ header .header-nav a.active {
 .stats-loading {
     text-align: center;
     padding: 4rem;
-    color: #4a6e4a;
+    color: var(--nav-color);
     font-size: 1rem;
 }
 
@@ -428,7 +508,7 @@ header .header-nav a.active {
 }
 
 .stat-card {
-    background: #fff;
+    background: var(--surface);
     border-radius: 10px;
     box-shadow: 0 1px 4px rgba(0,0,0,0.08);
     padding: 1.25rem 1rem 1.1rem;
@@ -442,7 +522,7 @@ header .header-nav a.active {
 }
 
 .stat-card:hover {
-    box-shadow: 0 3px 10px rgba(0,0,0,0.12);
+    box-shadow: 0 3px 10px rgba(0,0,0,0.15);
 }
 
 .stat-card[data-accent="green"]  { border-top-color: #2d6a2d; }
@@ -467,14 +547,14 @@ header .header-nav a.active {
 .stat-value {
     font-size: 1.5rem;
     font-weight: 700;
-    color: #1a2e1a;
+    color: var(--text);
     line-height: 1.1;
 }
 
 .stat-label {
     font-size: 0.72rem;
     font-weight: 600;
-    color: #6b8f6b;
+    color: var(--nav-color-alt);
     text-transform: uppercase;
     letter-spacing: 0.04em;
     margin-top: 0.3rem;
@@ -482,7 +562,7 @@ header .header-nav a.active {
 
 .stat-sub {
     font-size: 0.75rem;
-    color: #888;
+    color: var(--stat-sub);
     margin-top: 0.15rem;
 }
 
@@ -495,7 +575,7 @@ header .header-nav a.active {
 }
 
 .chart-card {
-    background: #fff;
+    background: var(--surface);
     border-radius: 10px;
     box-shadow: 0 1px 4px rgba(0,0,0,0.08);
     padding: 1.25rem 1.25rem 1rem;
@@ -504,7 +584,7 @@ header .header-nav a.active {
 .chart-card h2 {
     font-size: 0.9rem;
     font-weight: 700;
-    color: #1a2e1a;
+    color: var(--text);
     text-transform: uppercase;
     letter-spacing: 0.05em;
     margin-bottom: 1rem;
