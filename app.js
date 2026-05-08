@@ -23,6 +23,7 @@ function init() {
         if (e.target === this) closeModal();
     });
 
+    updateToggleBtn();
     loadSession();
 }
 

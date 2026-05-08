@@ -29,11 +29,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Forrest — Login</title>
     <link rel="stylesheet" href="style.css">
+    <script src="theme.js"></script>
 </head>
 <body>
 
     <header>
         <h1>Forrest</h1>
+        <div class="auth-wrap">
+            <button id="theme-toggle" class="theme-toggle" onclick="toggleTheme()"></button>
+        </div>
     </header>
 
     <main>
@@ -50,5 +54,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
     </main>
 
+    <script>updateToggleBtn();</script>
 </body>
 </html>
