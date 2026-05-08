@@ -1,5 +1,5 @@
 (function () {
-    var stored = localStorage.getItem('theme');
+    var stored = localStorage.getItem('forrest-theme');
     if (stored) document.documentElement.setAttribute('data-theme', stored);
 })();
 
@@ -11,7 +11,7 @@ function isDarkActive() {
 function toggleTheme() {
     var next = isDarkActive() ? 'light' : 'dark';
     document.documentElement.setAttribute('data-theme', next);
-    localStorage.setItem('theme', next);
+    localStorage.setItem('forrest-theme', next);
     updateToggleBtn();
     document.dispatchEvent(new CustomEvent('themechange'));
 }
