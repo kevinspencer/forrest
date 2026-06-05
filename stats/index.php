@@ -112,7 +112,7 @@
 
     function getClr() {
         return isDarkActive() ? {
-            grid:         '#2a3d2a', tick:         '#7ab87a',
+            grid:         '#303030', tick:         '#7ab87a',
             monthCur:     '#5ab870', monthCurBdr:  '#4aa060',
             monthOther:   '#3d8a52', monthOtherBdr:'#2d7a42',
             weekCur:      '#4a8ec7', weekCurBdr:   '#3a7eb7',
