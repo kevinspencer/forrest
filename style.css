@@ -40,27 +40,27 @@
     :root:not([data-theme="light"]) {
         --bg:                #1e1e1e;
         --text:              #e8e8e8;
-        --text-dim:          #999999;
+        --text-dim:          #ababab;
         --text-muted:        #787878;
 
         --header-bg:         #1a3d1a;
 
-        --surface:           #272727;
-        --surface-alt:       #222222;
-        --surface-tinted:    #2d2d2d;
-        --surface-header:    #2d2d2d;
+        --surface:           #2e2e2e;
+        --surface-alt:       #292929;
+        --surface-tinted:    #353535;
+        --surface-header:    #353535;
 
-        --border:            #303030;
-        --border-medium:     #3a3a3a;
+        --border:            #383838;
+        --border-medium:     #444444;
 
         --accent:            #5a9e5a;
         --accent-dark:       #4a8a4a;
         --nav-color:         #7ab87a;
         --nav-color-alt:     #7ab87a;
 
-        --month-nav-hover:   #2a2a2a;
-        --cancel-btn-bg:     #2a2a2a;
-        --cancel-btn-hover:  #333333;
+        --month-nav-hover:   #303030;
+        --cancel-btn-bg:     #303030;
+        --cancel-btn-hover:  #3a3a3a;
 
         --stat-sub:          #909090;
 
@@ -69,35 +69,35 @@
         --tier-3-bg:         #2d7a42;
         --tier-4-bg:         #1a5a30;
 
-        --chart-grid:        #303030;
+        --chart-grid:        #383838;
         --chart-tick:        #7ab87a;
     }
 }
 
 [data-theme="dark"] {
-    --bg:                #1e1e1e;
+    --bg:                #242424;
     --text:              #e8e8e8;
-    --text-dim:          #999999;
+    --text-dim:          #ababab;
     --text-muted:        #787878;
 
     --header-bg:         #1a3d1a;
 
-    --surface:           #272727;
-    --surface-alt:       #222222;
-    --surface-tinted:    #2d2d2d;
-    --surface-header:    #2d2d2d;
+    --surface:           #2e2e2e;
+    --surface-alt:       #292929;
+    --surface-tinted:    #353535;
+    --surface-header:    #353535;
 
-    --border:            #303030;
-    --border-medium:     #3a3a3a;
+    --border:            #383838;
+    --border-medium:     #444444;
 
     --accent:            #5a9e5a;
     --accent-dark:       #4a8a4a;
     --nav-color:         #7ab87a;
     --nav-color-alt:     #7ab87a;
 
-    --month-nav-hover:   #2a2a2a;
-    --cancel-btn-bg:     #2a2a2a;
-    --cancel-btn-hover:  #333333;
+    --month-nav-hover:   #303030;
+    --cancel-btn-bg:     #303030;
+    --cancel-btn-hover:  #3a3a3a;
 
     --stat-sub:          #909090;
 
@@ -106,7 +106,7 @@
     --tier-3-bg:         #2d7a42;
     --tier-4-bg:         #1a5a30;
 
-    --chart-grid:        #303030;
+    --chart-grid:        #383838;
     --chart-tick:        #7ab87a;
 }
 
